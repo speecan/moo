@@ -5,9 +5,8 @@ import (
 	"sync"
 	"testing"
 
-	"git.arcadia.co.jp/munenari/moo/game"
-	"git.arcadia.co.jp/munenari/moo/munenari"
-	"git.arcadia.co.jp/munenari/moo/sample"
+	"github.com/speecan/moo/game"
+	"github.com/speecan/moo/sample"
 )
 
 func TestRunOnce(t *testing.T) {
@@ -25,7 +24,7 @@ func BenchmarkRunOnceParallel(b *testing.B) {
 	b.ResetTimer()
 	b.RunParallel(func(pb *testing.PB) {
 		for pb.Next() {
-			c := runOnce(munenari.Estimate(difficulty))
+			c := runOnce(sample.EstimateWithRandom(difficulty))
 			// c := runOnce(sample.EstimateWithRandom(difficulty))
 			mutex.Lock()
 			count += c
