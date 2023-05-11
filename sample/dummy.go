@@ -8,8 +8,9 @@ import (
 	"github.com/speecan/moo/game"
 )
 
-// EstimateHuman is played by human
-func EstimateHuman(difficulty int) game.Estimate {
+type Human struct{}
+
+func (Human) Init(difficulty int) game.Estimate {
 	return func(fn game.Question) (res []int) {
 		var input string
 		fmt.Print("?: ")
@@ -20,9 +21,9 @@ func EstimateHuman(difficulty int) game.Estimate {
 	}
 }
 
-// EstimateWithRandom is idiot algo.
-// returns estimate number with simply random
-func EstimateWithRandom(difficulty int) game.Estimate {
+type Random struct{}
+
+func (Random) Init(difficulty int) game.Estimate {
 	return func(fn game.Question) (res []int) {
 		r := game.GetMooNum(difficulty)
 		fn(r)
@@ -30,9 +31,9 @@ func EstimateWithRandom(difficulty int) game.Estimate {
 	}
 }
 
-// EstimateWithRandom2 is idiot algo.
-// exclude duplicate queries
-func EstimateWithRandom2(difficulty int) game.Estimate {
+type Random2 struct{}
+
+func (Random2) Init(difficulty int) game.Estimate {
 	query := make([][]int, 0)
 	isDuplicated := func(i []int) bool {
 		for _, v := range query {

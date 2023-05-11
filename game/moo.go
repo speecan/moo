@@ -20,7 +20,27 @@ type (
 		difficulty int
 		answer     []int
 	}
+	Estimater interface {
+		Init(difficulty int) Estimate
+	}
 )
+
+func Run(difficulty int, e Estimater) (count int) {
+	// set game difficulty to 4
+	g := NewGame(difficulty)
+	q := g.GetQuestion(&count)
+	fn := e.Init(difficulty)
+	fmt.Println("answer:", g.GetAnswer())
+	for {
+		// loop until hit the answer
+		res := fn(q)
+		if g.Equals(res) {
+			break
+		}
+	}
+	fmt.Println("total questions:", count)
+	return count
+}
 
 // NewGame returns a new game field
 func NewGame(d int) *Game {
